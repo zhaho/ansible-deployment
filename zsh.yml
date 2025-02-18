@@ -8,5 +8,5 @@
       - joel-porquet/zsh-dircolors-solarized
     zsh_autosuggestions_bind_key: "^U"
   roles:
-    - { role: viasite-ansible.zsh, zsh_user: {{ host_user }} }
-  
+    - role: viasite-ansible.zsh
+      zsh_user: "{{ host_user }}"
