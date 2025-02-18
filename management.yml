@@ -1,19 +1,33 @@
 ---
-- name: Install Required Ansible Roles
-  hosts: localhost
-  tasks:
-    - name: Install Zsh Role via Ansible Galaxy
-      ansible.builtin.command: ansible-galaxy install viasite-ansible.zsh --force
-      changed_when: false
-
 - name: Setup Management Environment
   hosts: localhost
   become: true
-  vars:
-    zsh_antigen_bundles_extras:
-      - nvm
-      - joel-porquet/zsh-dircolors-solarized
-    zsh_autosuggestions_bind_key: "^U"
 
-  roles:
-    - { role: viasite-ansible.zsh, zsh_user: zhaho }
+  tasks:
+    - name: Ensure required role is installed
+      ansible.builtin.shell: |
+        ansible-galaxy install viasite-ansible.zsh --force
+      args:
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Reload Ansible roles path
+      ansible.builtin.meta: reset_connection  # Ensures Ansible picks up newly installed roles
+
+    - name: Include the role after installation
+      ansible.builtin.include_role:
+        name: viasite-ansible.zsh
+      vars:
+        zsh_user: zhaho
+        zsh_antigen_bundles_extras:
+          - nvm
+          - joel-porquet/zsh-dircolors-solarized
+        zsh_autosuggestions_bind_key: "^U"
+
+    - name: Hostname
+      ansible.builtin.command: hostname
+      register: hostname
+
+    - name: Output Hostname
+      ansible.builtin.debug:
+        var: hostname.stdout
