@@ -2,18 +2,17 @@
 - name: Setup Management Environment
   hosts: localhost
   become: true
+
+  pre_tasks:
+    - name: Install Zsh Role via Ansible Galaxy
+      ansible.builtin.command: ansible-galaxy install viasite-ansible.zsh --force
+      changed_when: false
+
   vars:
     zsh_antigen_bundles_extras:
       - nvm
       - joel-porquet/zsh-dircolors-solarized
     zsh_autosuggestions_bind_key: "^U"
+
   roles:
     - { role: viasite-ansible.zsh, zsh_user: zhaho }
-  tasks:
-    - name: Hostname
-      ansible.builtin.command: hostname
-      register: hostname
-
-    - name: Output Hostname
-      debug:
-        var: hostname.stdout
