@@ -1,13 +1,14 @@
 ---
-- name: Setup Management Environment
+- name: Install Required Ansible Roles
   hosts: localhost
-  become: true
-
-  pre_tasks:
+  tasks:
     - name: Install Zsh Role via Ansible Galaxy
       ansible.builtin.command: ansible-galaxy install viasite-ansible.zsh --force
       changed_when: false
 
+- name: Setup Management Environment
+  hosts: localhost
+  become: true
   vars:
     zsh_antigen_bundles_extras:
       - nvm
