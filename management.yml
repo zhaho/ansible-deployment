@@ -3,44 +3,10 @@
   hosts: localhost
   become: true
   tasks:
-    - name: Update APT package cache
-      ansible.builtin.apt:
-        update_cache: yes
+    - name: Hostname
+      ansible.builtin.command: hostname
+      register: hostname
 
-    - name: Install packages
-      ansible.builtin.package:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - tree
-        - htop
-        - ansible-core
-        - git
-        - python3
-        - python3-pip
-        - net-tools
-
-    - name: Enable SSH on Host
-      command:
-        cmd: echo "PasswordAuthentication yes" > /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
-
-    - name: Ensure password authentication is enabled in main sshd_config
-      lineinfile:
-        path: /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
-        regexp: '^#?PasswordAuthentication'
-        line: 'PasswordAuthentication yes'
-        state: present
-
-    - name: Restart SSH service
-      service:
-        name: sshd
-        state: restarted
-        enabled: yes
-
-    - name: Restart SSH service
-      service:
-        name: ssh
-        state: restarted
-        enabled: yes
-      when: 
-      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "24.04"
+    - name: Output Hostname
+      debug:
+        var: hostname.stdout 
