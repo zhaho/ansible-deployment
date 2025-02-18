@@ -2,6 +2,13 @@
 - name: Setup Management Environment
   hosts: localhost
   become: true
+  vars:
+    zsh_antigen_bundles_extras:
+      - nvm
+      - joel-porquet/zsh-dircolors-solarized
+    zsh_autosuggestions_bind_key: "^U"
+  roles:
+    - { role: viasite-ansible.zsh, zsh_user: zhaho }
   tasks:
     - name: Hostname
       ansible.builtin.command: hostname
@@ -9,4 +16,4 @@
 
     - name: Output Hostname
       debug:
-        var: hostname.stdout 
+        var: hostname.stdout
