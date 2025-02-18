@@ -14,20 +14,15 @@
     - name: Reload Ansible roles path
       ansible.builtin.meta: reset_connection  # Ensures Ansible picks up newly installed roles
 
-    - name: Include the role after installation
-      ansible.builtin.include_role:
-        name: viasite-ansible.zsh
-      vars:
-        zsh_user: zhaho
-        zsh_antigen_bundles_extras:
-          - nvm
-          - joel-porquet/zsh-dircolors-solarized
-        zsh_autosuggestions_bind_key: "^U"
-
-    - name: Hostname
-      ansible.builtin.command: hostname
-      register: hostname
-
-    - name: Output Hostname
-      ansible.builtin.debug:
-        var: hostname.stdout
+---
+- name: Install ZSH
+  hosts: localhost
+  become: true
+  vars:
+    zsh_antigen_bundles_extras:
+      - nvm
+      - joel-porquet/zsh-dircolors-solarized
+    zsh_autosuggestions_bind_key: "^U"
+  roles:
+    - { role: viasite-ansible.zsh, zsh_user: zhaho }
+  
