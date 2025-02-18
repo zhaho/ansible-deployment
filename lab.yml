@@ -1,5 +1,5 @@
 ---
-- name: Setup Management Environment
+- name: Setup Lab Environment
   hosts: localhost
   become: true
   tasks:
