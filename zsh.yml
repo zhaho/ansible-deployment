@@ -14,9 +14,8 @@
         name: "ansible-role-oh-my-zsh"
       vars:
         omz_user: "{{ item }}"
-        # Only create `.zshrc` for user 'lorem'; item.settings will be
-        # appended to `.zshrc` for the user 'ipsum'.
         omz_zshrc_create: true
+        omz_theme: "risto"
         omz_plugins:
           - "autojump"
           - "git"
