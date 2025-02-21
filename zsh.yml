@@ -5,7 +5,7 @@
   vars:
     omz_install_zsh: true
     users:
-      - name: "zhaho"
+      - name: "{{ host_user }}"
         group: "Ubuntu"
         settings: ""
   tasks:
