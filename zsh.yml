@@ -1,12 +1,23 @@
 ---
-- name: Setup ZSH
+- name: Setup Oh mY Posh
   hosts: localhost
   become: true
   vars:
-    zsh_antigen_bundles_extras:
-      - nvm
-      - joel-porquet/zsh-dircolors-solarized
-    zsh_autosuggestions_bind_key: "^U"
-  roles:
-    - role: viasite-ansible.zsh
-      zsh_user: "{{ host_user }}"
+    omz_install_zsh: true
+    users:
+      - name: "zhaho"
+        group: "Ubuntu"
+        settings: ""
+  tasks:
+    - name: Run ansible-role-oh-my-zsh.
+      include_role:
+        name: "ansible-role-oh-my-zsh"
+      vars:
+        omz_user: "{{ item }}"
+        # Only create `.zshrc` for user 'lorem'; item.settings will be
+        # appended to `.zshrc` for the user 'ipsum'.
+        omz_zshrc_create: true
+        omz_plugins:
+          - "autojump"
+          - "git"
+      with_items: "{{ users }}"
