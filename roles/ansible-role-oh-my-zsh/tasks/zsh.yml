@@ -6,9 +6,10 @@
 - name: "OMZ | ensure zsh is installed."
   block:
     - name: "OMZ | install zsh for Linux."
-      package:
+      apt:
         name: "zsh"
         state: "present"
+        update_cache: yes
       when:
         - "ansible_system == 'Linux'"
         - "omz_install_zsh"
