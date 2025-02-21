@@ -7,8 +7,7 @@
     users:
       - name: "{{ host_user }}"
         group: "{{ host_user }}"
-        settings: |
-          ZSH_THEME="obraun"
+        settings: ""
   tasks:
     - name: Run ansible-role-oh-my-zsh.
       include_role:
@@ -16,6 +15,7 @@
       vars:
         omz_user: "{{ item }}"
         omz_zshrc_create: true
+        omz_theme: "obraun"
         omz_plugins:
           - "autojump"
           - "git"
