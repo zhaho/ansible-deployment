@@ -6,7 +6,7 @@
     omz_install_zsh: true
     users:
       - name: "{{ host_user }}"
-        group: "Ubuntu"
+        group: "{{ host_user }}"
         settings: ""
   tasks:
     - name: Run ansible-role-oh-my-zsh.
