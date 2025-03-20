@@ -15,7 +15,6 @@
       vars:
         omz_user: "{{ item }}"
         omz_zshrc_create: true
-        omz_theme: "robbyrussell"
         omz_plugins:
           - "autojump"
           - "git"
