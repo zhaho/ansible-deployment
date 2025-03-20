@@ -9,6 +9,10 @@
         group: "{{ host_user }}"
         settings: ""
   tasks:
+    - name: Install Autojump
+      ansible.builtin.package:
+        name: autojump
+        state: present
     - name: Run ansible-role-oh-my-zsh.
       include_role:
         name: "ansible-role-oh-my-zsh"
