@@ -23,3 +23,10 @@
           - "autojump"
           - "git"
       with_items: "{{ users }}"
+
+    - name: Ensure PROMPT line is customized in arrow.zsh-theme
+      ansible.builtin.lineinfile:
+        path: /home/zhaho/.oh-my-zsh/themes/arrow.zsh-theme
+        regexp: '^PROMPT='
+        line: "PROMPT='%{$fg[$NCOLOR]%}%n@%m %c ➤ %{$reset_color%}'"
+        backrefs: true
